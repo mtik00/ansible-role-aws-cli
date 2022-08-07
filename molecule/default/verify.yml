@@ -4,7 +4,16 @@
 - name: Verify
   hosts: all
   gather_facts: false
+  vars:
+    configure_aws_cli: true
+    apt_cache_valid_time: 3600
   tasks:
-  - name: Example assertion
-    ansible.builtin.assert:
-      that: true
+    - name: Look for the executable
+      ansible.builtin.stat:
+        path: /usr/local/bin/aws
+      register: aws_exectutable
+
+    - name: Ensure the executable exists
+      ansible.builtin.assert:
+        that:
+          - aws_exectutable.stat.exists

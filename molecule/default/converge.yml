@@ -2,6 +2,9 @@
 - name: Converge
   hosts: all
   gather_facts: false
+  vars:
+    configure_aws_cli: true
+    apt_cache_valid_time: 3600
   tasks:
     - name: "Include mtik00.aws_cli"
       ansible.builtin.include_role:
